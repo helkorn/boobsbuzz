@@ -454,7 +454,7 @@
                         <div class="blur-background">
                             <img src="titpics/${word.toLowerCase()}.png">
                         </div>
-                        <img id="mainImage" class="zoom-image" src="titpics/${word.toLowerCase()}.png" style="transform: translate(-50%, -50%) scale(1);">
+                        <img id="mainImage" class="zoom-image" src="titpics/${word.toLowerCase()}.png" style="transform: translate(-${percentX}%, -${percentY}%);">
                     </div>
                     <div class="links-container">
                         <a href="titpics.html">OSTA TÄMÄ PAITA</a>
@@ -471,8 +471,7 @@
 
             // Start zoom animation
             setTimeout(() => {
-                mainImage.style.transform = `translate(-${percentX}%, -${percentY}%) scale(1.5)`;
-                mainImage.style.transition = 'transform 2.5s';
+                mainImage.style.animation = 'zoomIn 2.5s forwards';
             }, 1000); // Start after 1 second
         }
 
