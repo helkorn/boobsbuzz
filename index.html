@@ -137,22 +137,6 @@
             align-items: center;
             justify-content: center;
         }
-        .blur-background {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        .blur-background img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: blur(20px);
-        }
         .zoom-image {
             position: absolute;
             top: 50%;
@@ -451,9 +435,6 @@
                     <div class="gray-borders left-border"></div>
                     <div class="gray-borders right-border"></div>
                     <div class="image-container">
-                        <div class="blur-background">
-                            <img src="titpics/${word.toLowerCase()}.png">
-                        </div>
                         <img id="mainImage" class="zoom-image" src="titpics/${word.toLowerCase()}.png" style="transform: translate(-${percentX}%, -${percentY}%);">
                     </div>
                     <div class="links-container">
