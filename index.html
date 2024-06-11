@@ -273,7 +273,7 @@
 
             let directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
             let positions = [{ x: startX, y: startY }];
-            grid[startY][startX] = word.charAt(0) === '_' ? '' : word.charAt(0).toUpperCase();
+            grid[startY][startX] = word.charAt(0).toUpperCase();
 
             for (let i = 1; i < word.length; i++) {
                 let lastPos = positions[positions.length - 1];
@@ -289,7 +289,7 @@
                 let newX = lastPos.x + dir[0];
                 let newY = lastPos.y + dir[1];
 
-                grid[newY][newX] = word.charAt(i) === '_' ? '' : word.charAt(i).toUpperCase();
+                grid[newY][newX] = word.charAt(i).toUpperCase();
                 positions.push({ x: newX, y: newY });
             }
 
@@ -413,7 +413,7 @@
 
         function giveHint() {
             if (hintCount >= 3) {
-                hintButton.style.color = 'gray'; hintButton.style.cursor = 'not-allowed'; hintButton.innerText = 'ANNA VINKKI';
+                hintButton.style.color = 'gray';
                 hintButton.style.cursor = 'not-allowed';
                 return;
             }
@@ -429,7 +429,7 @@
                 hintCount++;
 
                 if (hintCount >= 3) {
-                    hintButton.style.color = 'gray'; hintButton.style.cursor = 'not-allowed'; hintButton.innerText = 'ANNA VINKKI';
+                    hintButton.style.color = 'gray';
                     hintButton.style.cursor = 'not-allowed';
                 }
             }
@@ -454,7 +454,7 @@
                         <div class="blur-background">
                             <img src="titpics/${word.toLowerCase()}.png">
                         </div>
-                        <img id="mainImage" class="zoom-image" src="titpics/${word.toLowerCase()}.png" style="transform: translate(-${percentX}%, -${percentY}%);">
+                        <img id="mainImage" class="zoom-image" src="titpics/${word.toLowerCase()}.png" style="transform: translate(-50%, -50%) scale(1);">
                     </div>
                     <div class="links-container">
                         <a href="titpics.html">OSTA TÄMÄ PAITA</a>
@@ -471,7 +471,8 @@
 
             // Start zoom animation
             setTimeout(() => {
-                mainImage.style.animation = 'zoomIn 2.5s forwards';
+                mainImage.style.transform = `translate(-${percentX}%, -${percentY}%) scale(1.5)`;
+                mainImage.style.transition = 'transform 2.5s';
             }, 1000); // Start after 1 second
         }
 
