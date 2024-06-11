@@ -273,7 +273,7 @@
 
             let directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
             let positions = [{ x: startX, y: startY }];
-            grid[startY][startX] = word.charAt(0) === '_' ? '' : word.charAt(0).toUpperCase();
+            grid[startY][startX] = word.charAt(0).toUpperCase();
 
             for (let i = 1; i < word.length; i++) {
                 let lastPos = positions[positions.length - 1];
@@ -289,7 +289,7 @@
                 let newX = lastPos.x + dir[0];
                 let newY = lastPos.y + dir[1];
 
-                grid[newY][newX] = word.charAt(i) === '_' ? '' : word.charAt(i).toUpperCase();
+                grid[newY][newX] = word.charAt(i).toUpperCase();
                 positions.push({ x: newX, y: newY });
             }
 
@@ -413,7 +413,7 @@
 
         function giveHint() {
             if (hintCount >= 3) {
-                hintButton.style.color = 'gray'; hintButton.style.cursor = 'not-allowed'; hintButton.innerText = 'ANNA VINKKI';
+                hintButton.style.color = 'gray';
                 hintButton.style.cursor = 'not-allowed';
                 return;
             }
@@ -429,7 +429,7 @@
                 hintCount++;
 
                 if (hintCount >= 3) {
-                    hintButton.style.color = 'gray'; hintButton.style.cursor = 'not-allowed'; hintButton.innerText = 'ANNA VINKKI';
+                    hintButton.style.color = 'gray';
                     hintButton.style.cursor = 'not-allowed';
                 }
             }
