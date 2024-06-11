@@ -222,19 +222,15 @@
         hintButton.addEventListener('click', giveHint);
 
         async function fetchWord() {
-            const response = await fetch('image_map.csv');
+            const response = await fetch('boobsmap.csv');
             const text = await response.text();
             const lines = text.split('\n').slice(1); // Skip the header
             const words = lines.map(line => line.split(',')[0].trim()).filter(word => word.length > 0);
             return words[Math.floor(Math.random() * words.length)];
-    
-            const text = await response.text();
-            const words = text.split('\n').map(word => word.trim()).filter(word => word.length > 0);
-            return words[Math.floor(Math.random() * words.length)];
         }
 
         async function fetchZoomData() {
-            const response = await fetch('image_map.csv');
+            const response = await fetch('boobsmap.csv');
             const text = await response.text();
             const lines = text.split('\n').slice(1); // Skip the header
             const data = lines.map(line => {
@@ -245,7 +241,7 @@
         }
 
         async function createGrid() {
-            const word = (await fetchWord());
+            const word = await fetchWord();
             wordPositions = [];
 
             let grid = [];
@@ -463,4 +459,3 @@
     </script>
 </body>
 </html>
-
