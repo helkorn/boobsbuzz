@@ -131,6 +131,7 @@
         .image-container {
             width: 400px;
             height: 400px;
+            border: 2px solid silver;
             position: relative;
             overflow: hidden;
             display: flex;
@@ -205,11 +206,6 @@
         .right-border {
             right: 0;
         }
-        .zoom-coordinates {
-            margin-top: 20px;
-            font-size: 16px;
-            color: black;
-        }
     </style>
 </head>
 <body>
@@ -239,15 +235,14 @@
         hintButton.addEventListener('click', giveHint);
 
         async function fetchWord() {
-            const response = await fetch('boobsmap.csv');
+            const response = await fetch('../melonit.csv');
             const text = await response.text();
-            const lines = text.split('\n').slice(1); // Skip the header
-            const words = lines.map(line => line.split(',')[0].trim()).filter(word => word.length > 0);
+            const words = text.split('\n').map(word => word.trim()).filter(word => word.length > 0);
             return words[Math.floor(Math.random() * words.length)];
         }
 
         async function fetchZoomData() {
-            const response = await fetch('boobsmap.csv');
+            const response = await fetch('../boobsmap.csv');
             const text = await response.text();
             const lines = text.split('\n').slice(1); // Skip the header
             const data = lines.map(line => {
@@ -414,8 +409,6 @@
 
         function giveHint() {
             if (hintCount >= 3) {
-                hintButton.style.color = 'gray';
-                hintButton.style.cursor = 'not-allowed';
                 return;
             }
             const currentIndex = [...gridElement.children].filter(c => c.classList.contains('clicked')).length;
@@ -453,17 +446,13 @@
                     <div class="gray-borders right-border"></div>
                     <div class="image-container">
                         <div class="blur-background">
-                            <img src="titpics/${word.toLowerCase()}.png">
+                            <img src="../titpics/${word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()}.png">
                         </div>
-                        <img id="mainImage" class="zoom-image" src="titpics/${word.toLowerCase()}.png" style="transform: translate(-${percentX}%, -${percentY}%);">
+                        <img id="mainImage" class="zoom-image" src="../titpics/${word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()}.png" style="transform: translate(-${percentX}%, -${percentY}%);">
                     </div>
                     <div class="links-container">
                         <a href="titpics.html">OSTA TÄMÄ PAITA</a>
                         <div onclick="window.location.href='https://timosalonen.github.io/boobsbuzz/'">UUSI PELI</div>
-                    </div>
-                    <div class="zoom-coordinates">
-                        <p>X-Koordinaatti: ${percentX}%</p>
-                        <p>Y-Koordinaatti: ${percentY}%</p>
                     </div>
                 </div>
             `;
@@ -472,7 +461,7 @@
 
             // Start zoom animation
             setTimeout(() => {
-                mainImage.style.animation = 'zoomIn 2.5s forwards';
+                mainImage.style.animation = 'zoomIn 9s forwards';
             }, 1000); // Start after 1 second
         }
 
