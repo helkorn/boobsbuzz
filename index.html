@@ -229,7 +229,7 @@
         }
 
         async function fetchZoomData() {
-            const response = await fetch('boobsmap.csv');
+            const response = await fetch('image_map.csv');
             const text = await response.text();
             const lines = text.split('\n').slice(1); // Skip the header
             const data = lines.map(line => {
@@ -458,3 +458,4 @@
     </script>
 </body>
 </html>
+
