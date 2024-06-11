@@ -239,9 +239,10 @@
         hintButton.addEventListener('click', giveHint);
 
         async function fetchWord() {
-            const response = await fetch('melonit.csv');
+            const response = await fetch('boobsmap.csv');
             const text = await response.text();
-            const words = text.split('\n').map(word => word.trim()).filter(word => word.length > 0);
+            const lines = text.split('\n').slice(1); // Skip the header
+            const words = lines.map(line => line.split(',')[0].trim()).filter(word => word.length > 0);
             return words[Math.floor(Math.random() * words.length)];
         }
 
