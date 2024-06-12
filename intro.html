@@ -30,6 +30,39 @@
     </style>
 </head>
 <body>
-    <div id="header-word">WOMANBOOBS</div>
+    <div id="header-word"></div>
+
+    <script>
+        function changeWord() {
+            const headerElement = document.getElementById('header-word');
+            const initialWord = "MANBOOBS";
+            const finalWord = "WOMANBOOBS";
+
+            // Add the initial word with gray letters
+            headerElement.innerHTML = '';
+            for (let i = 0; i < initialWord.length; i++) {
+                const span = document.createElement('span');
+                span.textContent = initialWord[i];
+                headerElement.appendChild(span);
+            }
+
+            console.log('Initial word added:', headerElement.innerHTML);
+
+            // Change each letter from MANBOOBS to WOMANBOOBS
+            for (let i = 0; i < finalWord.length; i++) {
+                if (headerElement.children[i]) {
+                    const letterElement = headerElement.children[i];
+                    console.log(`Changing letter ${i}: ${letterElement.textContent} to ${finalWord[i]}`);
+                    letterElement.textContent = finalWord[i];
+                } else {
+                    console.warn(`No element found for index ${i}`);
+                }
+            }
+
+            console.log('Final word after change:', headerElement.innerHTML);
+        }
+
+        changeWord();
+    </script>
 </body>
 </html>
