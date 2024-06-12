@@ -74,6 +74,9 @@
             const initialWord = "MANBOOBS";
             const finalWord = "WOMANBOOBS";
 
+            console.log(`Initial Word: ${initialWord}`);
+            console.log(`Final Word: ${finalWord}`);
+
             // Add the initial word with gray letters
             headerElement.innerHTML = '';
             for (let i = 0; i < initialWord.length; i++) {
@@ -90,6 +93,7 @@
             // Change each letter from MANBOOBS to WOMANBOOBS
             for (let i = 0; i < finalWord.length; i++) {
                 const letterElement = headerElement.children[i];
+                console.log(`Changing letter ${i}: ${letterElement.textContent} to ${finalWord[i]}`);
                 letterElement.textContent = finalWord[i];
                 letterElement.classList.add('transition');
                 letterElement.style.animationDelay = `${i * 0.1}s`;
