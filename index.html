@@ -204,9 +204,46 @@
             background-size: contain;
             cursor: pointer;
         }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes changeLetter {
+            0% { color: gray; }
+            100% { color: #FF69B4; }
+        }
+
+        @keyframes shatter {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(50px) rotate(360deg); }
+        }
+
+        #header-word {
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .header-letter {
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .header-letter.transition {
+            animation: changeLetter 1s forwards;
+        }
+
+        .header-letter.shatter {
+            animation: shatter 1s forwards;
+        }
     </style>
 </head>
 <body>
+    <div id="header-word"></div>
     <div id="puzzle">
         <!-- Puzzle items will be generated here -->
     </div>
@@ -304,6 +341,10 @@
             `;
             hintButton.style.color = 'white';
             hintButton.style.cursor = 'pointer';
+
+            // Show and animate the word "MANBOOBS" changing to "WOMANBOOBS"
+            await animateHeaderWord();
+
             const { grid, word, positions, startX, startY } = await createGrid();
             let foundLetters = 0;
 
@@ -462,6 +503,49 @@
             // Ensure the play-again icon is linked to initGame correctly
             const playAgainIcon = document.getElementById('playAgain');
             playAgainIcon.addEventListener('click', initGame);
+        }
+
+        async function animateHeaderWord() {
+            const headerElement = document.getElementById('header-word');
+            const initialWord = "MANBOOBS";
+            const finalWord = "WOMANBOOBS";
+
+            // Add the initial word with gray letters
+            headerElement.innerHTML = '';
+            for (let i = 0; i < initialWord.length; i++) {
+                const span = document.createElement('span');
+                span.textContent = initialWord[i];
+                span.classList.add('header-letter');
+                span.style.animationDelay = `${i * 0.1}s`;
+                headerElement.appendChild(span);
+            }
+
+            // Wait for the initial word to fully appear
+            await new Promise(resolve => setTimeout(resolve, initialWord.length * 100 + 500));
+
+            // Change each letter from MANBOOBS to WOMANBOOBS
+            for (let i = 0; i < finalWord.length; i++) {
+                const letterElement = headerElement.children[i];
+                letterElement.textContent = finalWord[i];
+                letterElement.classList.add('transition');
+                letterElement.style.animationDelay = `${i * 0.1}s`;
+            }
+
+            // Wait for the final word to be fully visible
+            await new Promise(resolve => setTimeout(resolve, finalWord.length * 1000 + 2000));
+
+            // Add shatter animation to each letter
+            for (let i = 0; i < finalWord.length; i++) {
+                const letterElement = headerElement.children[i];
+                letterElement.classList.add('shatter');
+                letterElement.style.animationDelay = `${i * 0.05}s`;
+            }
+
+            // Wait for the shatter animation to complete
+            await new Promise(resolve => setTimeout(resolve, finalWord.length * 50 + 1000));
+
+            // Clear the header word
+            headerElement.innerHTML = '';
         }
 
         initGame();
