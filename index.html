@@ -49,10 +49,7 @@
         .grid-item.wrong {
             background-color: rgba(255, 255, 255, 0.3);
         }
-        @keyframes flash {
-            0%, 100% { background-color: #FF69B4; }
-            50% { background-color: transparent; }
-        }
+        @keyframes flash { 0%, 100% { background-color: #FF69B4; } 50% { background-color: black; } }
         .flash {
             animation: flash 0.2s 3;
         }
@@ -311,7 +308,7 @@
                 row.forEach((letter, colIndex) => {
                     const cell = document.createElement('div');
                     cell.classList.add('grid-item');
-                    cell.innerHTML = `<span>${letter}</span>`;
+                    cell.innerHTML = `<span>\${letter === "_" ? "" : letter}</span>`;
                     cell.dataset.letter = letter;
                     cell.dataset.row = rowIndex;
                     cell.dataset.col = colIndex;
@@ -400,18 +397,11 @@
 
         function flashGridAndRestart() {
             gridElement.classList.add('flash-grid');
-            setTimeout(() => {
-                gridElement.classList.remove('flash-grid');
-                initGame();
-            }, 500);
+            setTimeout(() => { gridElement.classList.remove(\'flash-grid\'); initGame(); }, 250);
         }
 
         function giveHint() {
-            if (hintCount >= 3) {
-                hintButton.style.color = 'gray';
-                hintButton.style.cursor = 'not-allowed';
-                return;
-            }
+            if (hintCount >= 3) { hintButton.style.color = \'gray\'; hintButton.style.cursor = \'not-allowed\'; return; }
             const currentIndex = [...gridElement.children].filter(c => c.classList.contains('clicked')).length;
             const nextPos = wordPositions[currentIndex];
 
@@ -464,5 +454,3 @@
     </script>
 </body>
 </html>
-
-
