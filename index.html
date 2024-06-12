@@ -215,9 +215,9 @@
             100% { color: #FF69B4; }
         }
 
-        @keyframes shatter {
-            0% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(50px) rotate(360deg); }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
         }
 
         #header-word {
@@ -237,8 +237,8 @@
             animation: changeLetter 1s forwards;
         }
 
-        .header-letter.shatter {
-            animation: shatter 1s forwards;
+        .header-letter.fade {
+            animation: fadeOut 1s forwards;
         }
     </style>
 </head>
@@ -272,7 +272,7 @@
         async function fetchWord() {
             const response = await fetch('boobsmap.csv');
             const text = await response.text();
-            const lines = text.split('\n').slice(1); // Skip the header
+            const lines = text.split('\\n').slice(1); // Skip the header
             const words = lines.map(line => line.split(',')[0].trim()).filter(word => word.length > 0);
             return words[Math.floor(Math.random() * words.length)];
         }
@@ -280,7 +280,7 @@
         async function fetchZoomData() {
             const response = await fetch('boobsmap.csv');
             const text = await response.text();
-            const lines = text.split('\n').slice(1); // Skip the header
+            const lines = text.split('\\n').slice(1); // Skip the header
             const data = lines.map(line => {
                 const [image_name, width, height, coord_x, coord_y, percent_x, percent_y] = line.split(',');
                 return { image_name, percent_x: parseFloat(percent_x), percent_y: parseFloat(percent_y) };
@@ -534,15 +534,15 @@
             // Wait for the final word to be fully visible
             await new Promise(resolve => setTimeout(resolve, finalWord.length * 1000 + 2000));
 
-            // Add shatter animation to each letter
+            // Add fade-out animation to each letter
             for (let i = 0; i < finalWord.length; i++) {
                 const letterElement = headerElement.children[i];
-                letterElement.classList.add('shatter');
-                letterElement.style.animationDelay = `${i * 0.05}s`;
+                letterElement.classList.add('fade');
+                letterElement.style.animationDelay = `${i * 0.1}s`;
             }
 
-            // Wait for the shatter animation to complete
-            await new Promise(resolve => setTimeout(resolve, finalWord.length * 50 + 1000));
+            // Wait for the fade-out animation to complete
+            await new Promise(resolve => setTimeout(resolve, finalWord.length * 100 + 1000));
 
             // Clear the header word
             headerElement.innerHTML = '';
