@@ -448,7 +448,7 @@
                     <div class="image-container">
                         <img id="mainImage" class="zoom-image" src="titpics/${word.toLowerCase()}.png" style="--targetX: ${targetX}%; --targetY: ${targetY}%; transform: translate(-50%, -50%);">
                     </div>
-                    <div class="play-again-icon" style="width: 40px; height: 40px;" onclick="initGame()"></div>
+                    <div id="playAgain" class="play-again-icon" style="width: 40px; height: 40px;" onclick="initGame()"></div>
                 </div>
             `;
 
@@ -458,6 +458,10 @@
             setTimeout(() => {
                 mainImage.style.animation = 'zoomIn 2.5s forwards';
             }, 1000); // Start after 1 second
+
+            // Ensure the play-again icon is linked to initGame correctly
+            const playAgainIcon = document.getElementById('playAgain');
+            playAgainIcon.addEventListener('click', initGame);
         }
 
         initGame();
