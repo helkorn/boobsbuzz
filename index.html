@@ -189,12 +189,17 @@
         .right-border {
             right: 0;
         }
+        .zoom-coordinates {
+            margin-top: 20px;
+            font-size: 16px;
+            color: black;
+        }
         .play-again-icon {
             position: absolute;
-            bottom: 10px;
-            right: 10px;
-            width: 50px;
-            height: 50px;
+            top: 420px; /* Aseta tämän mukaan kuvalaatikon korkeus */
+            right: 0;
+            width: 20px;
+            height: 20px;
             background: url('icon_play.png') no-repeat center center;
             background-size: contain;
             cursor: pointer;
@@ -443,7 +448,7 @@
                     <div class="image-container">
                         <img id="mainImage" class="zoom-image" src="titpics/${word.toLowerCase()}.png" style="--targetX: ${targetX}%; --targetY: ${targetY}%; transform: translate(-50%, -50%);">
                     </div>
-                    <div class="play-again-icon" style="background: url('icon_play.png') no-repeat center center;" onclick="initGame()"></div>
+                    <div class="play-again-icon" style="width: 20px; height: 20px;" onclick="initGame()"></div>
                 </div>
             `;
 
@@ -459,4 +464,3 @@
     </script>
 </body>
 </html>
-
