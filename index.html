@@ -196,7 +196,7 @@
         }
         .play-again-icon {
             position: absolute;
-            bottom: 30px;
+            top: 420px;
             right: 20px;
             width: 40px;
             height: 40px;
@@ -233,17 +233,14 @@
         hintButton.addEventListener('click', giveHint);
 
         async function fetchWord() {
-            console.log('Fetching word...');
             const response = await fetch('boobsmap.csv');
             const text = await response.text();
             const lines = text.split('\n').slice(1); // Skip the header
             const words = lines.map(line => line.split(',')[0].trim()).filter(word => word.length > 0);
-            console.log('Word fetched:', words);
             return words[Math.floor(Math.random() * words.length)];
         }
 
         async function fetchZoomData() {
-            console.log('Fetching zoom data...');
             const response = await fetch('boobsmap.csv');
             const text = await response.text();
             const lines = text.split('\n').slice(1); // Skip the header
@@ -251,7 +248,6 @@
                 const [image_name, width, height, coord_x, coord_y, percent_x, percent_y] = line.split(',');
                 return { image_name, percent_x: parseFloat(percent_x), percent_y: parseFloat(percent_y) };
             });
-            console.log('Zoom data fetched:', data);
             return data;
         }
 
@@ -267,56 +263,36 @@
                 }
             }
 
-            const availableDirections = [
-                [0, 1], [1, 0], [0, -1], [-1, 0], // Right, Down, Left, Up
-                [1, 1], [-1, 1], [1, -1], [-1, -1] // Diagonals
-            ];
+            let startX = Math.floor(Math.random() * 6);
+            let startY = Math.floor(Math.random() * 6);
 
-            function isInBounds(x, y) {
-                return x >= 0 && x < 6 && y >= 0 && y < 6;
+            let directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+            let positions = [{ x: startX, y: startY }];
+            grid[startY][startX] = word.charAt(0).toUpperCase();
+
+            for (let i = 1; i < word.length; i++) {
+                let lastPos = positions[positions.length - 1];
+                let possibleDirections = directions.filter(dir => {
+                    let newX = lastPos.x + dir[0];
+                    let newY = lastPos.y + dir[1];
+                    return newX >= 0 && newX < 6 && newY >= 0 && newY < 6 && !positions.some(pos => pos.x === newX && pos.y === newY);
+                });
+
+                if (possibleDirections.length === 0) break;
+
+                let dir = possibleDirections[Math.floor(Math.random() * possibleDirections.length)];
+                let newX = lastPos.x + dir[0];
+                let newY = lastPos.y + dir[1];
+
+                grid[newY][newX] = word.charAt(i).toUpperCase();
+                positions.push({ x: newX, y: newY });
             }
 
-            function findValidStartAndDirection(word) {
-                let startX, startY, direction;
-                let valid = false;
-
-                while (!valid) {
-                    startX = Math.floor(Math.random() * 6);
-                    startY = Math.floor(Math.random() * 6);
-                    direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
-                    
-                    let x = startX, y = startY;
-                    valid = true;
-                    
-                    for (let i = 0; i < word.length; i++) {
-                        if (!isInBounds(x, y) || (grid[y][x] !== getRandomLetter() && grid[y][x] !== word.charAt(i).toUpperCase())) {
-                            valid = false;
-                            break;
-                        }
-                        x += direction[0];
-                        y += direction[1];
-                    }
-                }
-
-                return { startX, startY, direction };
-            }
-
-            let { startX, startY, direction } = findValidStartAndDirection(word);
-
-            let x = startX, y = startY;
-            for (let i = 0; i < word.length; i++) {
-                grid[y][x] = word.charAt(i).toUpperCase();
-                wordPositions.push({ x, y });
-                x += direction[0];
-                y += direction[1];
-            }
-
-            console.log('Grid created:', grid);
-            return { grid, word, positions: wordPositions, startX, startY };
+            wordPositions = positions;
+            return { grid, word, positions, startX, startY };
         }
 
         async function initGame() {
-            console.log('Initializing game...');
             gridElement.innerHTML = '';
             foundWordElement.innerHTML = '';
             messageContainer.innerHTML = `
@@ -408,7 +384,6 @@
         }
 
         function startTimer(word) {
-            console.log('Starting timer...');
             let timeLeft = 30;
             timerElement = document.getElementById('timer');
             timerElement.textContent = `00:${timeLeft < 10 ? '0' + timeLeft : timeLeft}`;
@@ -489,3 +464,5 @@
     </script>
 </body>
 </html>
+
+
