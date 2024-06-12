@@ -189,11 +189,6 @@
         .right-border {
             right: 0;
         }
-        .zoom-coordinates {
-            margin-top: 20px;
-            font-size: 16px;
-            color: black;
-        }
         .play-again-icon {
             position: absolute;
             bottom: 10px;
@@ -448,7 +443,7 @@
                     <div class="image-container">
                         <img id="mainImage" class="zoom-image" src="titpics/${word.toLowerCase()}.png" style="--targetX: ${targetX}%; --targetY: ${targetY}%; transform: translate(-50%, -50%);">
                     </div>
-                    <div class="play-again-icon" onclick="initGame()"></div>
+                    <div class="play-again-icon" style="background: url('icon_play.png') no-repeat center center;" onclick="initGame()"></div>
                 </div>
             `;
 
@@ -464,3 +459,4 @@
     </script>
 </body>
 </html>
+
