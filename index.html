@@ -233,14 +233,17 @@
         hintButton.addEventListener('click', giveHint);
 
         async function fetchWord() {
+            console.log('Fetching word...');
             const response = await fetch('boobsmap.csv');
             const text = await response.text();
             const lines = text.split('\n').slice(1); // Skip the header
             const words = lines.map(line => line.split(',')[0].trim()).filter(word => word.length > 0);
+            console.log('Word fetched:', words);
             return words[Math.floor(Math.random() * words.length)];
         }
 
         async function fetchZoomData() {
+            console.log('Fetching zoom data...');
             const response = await fetch('boobsmap.csv');
             const text = await response.text();
             const lines = text.split('\n').slice(1); // Skip the header
@@ -248,6 +251,7 @@
                 const [image_name, width, height, coord_x, coord_y, percent_x, percent_y] = line.split(',');
                 return { image_name, percent_x: parseFloat(percent_x), percent_y: parseFloat(percent_y) };
             });
+            console.log('Zoom data fetched:', data);
             return data;
         }
 
@@ -285,7 +289,7 @@
                     valid = true;
                     
                     for (let i = 0; i < word.length; i++) {
-                        if (!isInBounds(x, y) || grid[y][x] !== getRandomLetter()) {
+                        if (!isInBounds(x, y) || (grid[y][x] !== getRandomLetter() && grid[y][x] !== word.charAt(i).toUpperCase())) {
                             valid = false;
                             break;
                         }
@@ -307,10 +311,12 @@
                 y += direction[1];
             }
 
+            console.log('Grid created:', grid);
             return { grid, word, positions: wordPositions, startX, startY };
         }
 
         async function initGame() {
+            console.log('Initializing game...');
             gridElement.innerHTML = '';
             foundWordElement.innerHTML = '';
             messageContainer.innerHTML = `
@@ -402,6 +408,7 @@
         }
 
         function startTimer(word) {
+            console.log('Starting timer...');
             let timeLeft = 30;
             timerElement = document.getElementById('timer');
             timerElement.textContent = `00:${timeLeft < 10 ? '0' + timeLeft : timeLeft}`;
