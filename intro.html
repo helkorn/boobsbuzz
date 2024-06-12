@@ -32,11 +32,6 @@
             100% { opacity: 0; transform: translateY(50px) rotate(360deg); }
         }
 
-        @keyframes fadeOutQuick {
-            0% { opacity: 1; color: #FF69B4; }
-            100% { opacity: 0; color: black; }
-        }
-
         #header-word {
             font-size: 24px;
             text-transform: uppercase;
@@ -46,6 +41,7 @@
             flex-wrap: nowrap;
             white-space: nowrap;
             margin-bottom: 20px;
+            position: relative;
         }
 
         .header-letter {
@@ -60,17 +56,23 @@
             animation: shatter 1s forwards;
         }
 
-        .header-letter.fade-out-quick {
-            animation: fadeOutQuick 0.5s forwards;
+        #logo {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            opacity: 0;
+            transition: opacity 1s;
         }
     </style>
 </head>
 <body>
     <div id="header-word"></div>
+    <img id="logo" src="pinklogo.png" alt="Logo">
 
     <script>
         async function animateHeaderWord() {
             const headerElement = document.getElementById('header-word');
+            const logoElement = document.getElementById('logo');
             const initialWord = "MANBOOBS";
             const finalWord = "WOMANDOO";
 
@@ -115,18 +117,22 @@
             // Wait for the final word to be fully visible
             await new Promise(resolve => setTimeout(resolve, finalWord.length * 1000 + 2000));
 
-            // Quick fade-out to black
-            for (let i = 0; i < finalWord.length; i++) {
-                const letterElement = headerElement.children[i];
-                letterElement.classList.add('fade-out-quick');
-                letterElement.style.animationDelay = `${i * 0.1}s`;
-            }
-
-            // Wait for the fade-out animation to complete
-            await new Promise(resolve => setTimeout(resolve, finalWord.length * 100 + 500));
-
-            // Clear the header word
+            // Clear the header word without fade-out
             headerElement.innerHTML = '';
+
+            // Position the logo between the last two letters
+            const lastLetter = headerElement.children[finalWord.length - 1];
+            const secondLastLetter = headerElement.children[finalWord.length - 2];
+            const lastLetterRect = lastLetter.getBoundingClientRect();
+            const secondLastLetterRect = secondLastLetter.getBoundingClientRect();
+
+            const logoX = (secondLastLetterRect.right + lastLetterRect.left) / 2 - 10; // Center of the gap minus half the logo width
+            logoElement.style.left = `${logoX}px`;
+            logoElement.style.top = `${secondLastLetterRect.top - 30}px`; // 30px above the letters
+
+            // Show the logo after 3 seconds
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            logoElement.style.opacity = 1;
         }
 
         animateHeaderWord();
