@@ -118,7 +118,7 @@
             text-decoration: underline;
         }
         .image-page {
-            background-color: white;
+            background-color: black;
             width: 100%;
             height: 100vh;
             display: flex;
@@ -196,8 +196,7 @@
         }
         .play-again-icon {
             position: absolute;
-            top: -30px;
-            right: 10px;
+            bottom: -20px;
             width: 20px;
             height: 20px;
             background: url('icon_play.png') no-repeat center center;
@@ -274,7 +273,7 @@
                 let lastPos = positions[positions.length - 1];
                 let possibleDirections = directions.filter(dir => {
                     let newX = lastPos.x + dir[0];
-                    let newY = lastPos.y + dir[1]);
+                    let newY = lastPos.y + dir[1];
                     return newX >= 0 && newX < 6 && newY >= 0 && newY < 6 && !positions.some(pos => pos.x === newX && pos.y === newY);
                 });
 
@@ -446,9 +445,9 @@
                     <div class="gray-borders left-border"></div>
                     <div class="gray-borders right-border"></div>
                     <div class="image-container">
-                        <div class="play-again-icon" style="width: 20px; height: 20px;" onclick="initGame()"></div>
                         <img id="mainImage" class="zoom-image" src="titpics/${word.toLowerCase()}.png" style="--targetX: ${targetX}%; --targetY: ${targetY}%; transform: translate(-50%, -50%);">
                     </div>
+                    <div class="play-again-icon" style="width: 20px; height: 20px;" onclick="initGame()"></div>
                 </div>
             `;
 
@@ -464,4 +463,3 @@
     </script>
 </body>
 </html>
-
