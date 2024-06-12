@@ -17,26 +17,6 @@
             font-family: Arial, sans-serif;
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        @keyframes changeLetter {
-            0% { color: gray; }
-            100% { color: #FF69B4; }
-        }
-
-        @keyframes shatter {
-            0% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(50px) rotate(360deg); }
-        }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-
         #header-word {
             font-size: 24px;
             text-transform: uppercase;
@@ -46,22 +26,6 @@
             flex-wrap: nowrap;
             white-space: nowrap;
             margin-bottom: 20px;
-        }
-
-        .header-letter {
-            animation: fadeIn 0.5s forwards;
-        }
-
-        .header-letter.transition {
-            animation: changeLetter 1s forwards;
-        }
-
-        .header-letter.shatter {
-            animation: shatter 1s forwards;
-        }
-
-        .header-letter.fade-out {
-            animation: fadeOut 1s forwards;
         }
     </style>
 </head>
@@ -82,8 +46,6 @@
             for (let i = 0; i < initialWord.length; i++) {
                 const span = document.createElement('span');
                 span.textContent = initialWord[i];
-                span.classList.add('header-letter');
-                span.style.animationDelay = `${i * 0.1}s`;
                 headerElement.appendChild(span);
             }
 
@@ -98,48 +60,15 @@
                     const letterElement = headerElement.children[i];
                     console.log(`Changing letter ${i}: ${letterElement.textContent} to ${finalWord[i]}`);
                     letterElement.textContent = finalWord[i];
-                    letterElement.classList.add('transition');
-                    letterElement.style.animationDelay = `${i * 0.1}s`;
                 } else {
                     console.warn(`No element found for index ${i}`);
                 }
             }
 
             console.log('Final word after change:', headerElement.innerHTML);
-
-            // Wait for the final word to be fully visible
-            await new Promise(resolve => setTimeout(resolve, finalWord.length * 1000 + 2000));
-
-            // Add shatter animation to each letter
-            for (let i = 0; i < finalWord.length; i++) {
-                const letterElement = headerElement.children[i];
-                if (letterElement) {
-                    letterElement.classList.add('shatter');
-                    letterElement.style.animationDelay = `${i * 0.05}s`;
-                }
-            }
-
-            // Wait for the shatter animation to complete
-            await new Promise(resolve => setTimeout(resolve, finalWord.length * 50 + 1000));
-
-            // Add fade-out animation to each letter
-            for (let i = 0; i < finalWord.length; i++) {
-                const letterElement = headerElement.children[i];
-                if (letterElement) {
-                    letterElement.classList.add('fade-out');
-                    letterElement.style.animationDelay = `${i * 0.1}s`;
-                }
-            }
-
-            // Wait for the fade-out animation to complete
-            await new Promise(resolve => setTimeout(resolve, finalWord.length * 100 + 1000));
-
-            // Clear the header word
-            headerElement.innerHTML = '';
         }
 
         animateHeaderWord();
     </script>
 </body>
 </html>
-
