@@ -46,6 +46,7 @@
             flex-wrap: nowrap;
             white-space: nowrap;
             margin-bottom: 20px;
+            position: relative;
         }
 
         .header-letter {
@@ -63,14 +64,22 @@
         .header-letter.fade-out-quick {
             animation: fadeOutQuick 0.5s forwards;
         }
+
+        .logo {
+            width: 20px;
+            position: absolute;
+            top: -30px; /* Adjust this value to place the logo at the correct height */
+        }
     </style>
 </head>
 <body>
     <div id="header-word"></div>
-
+    <img id="logo" src="pinklogo.png" class="logo" alt="Logo" style="display: none;">
+    
     <script>
         async function animateHeaderWord() {
             const headerElement = document.getElementById('header-word');
+            const logoElement = document.getElementById('logo');
             const initialWord = "MANBOOBS";
             const finalWord = "WOMANDOO";
 
@@ -114,6 +123,13 @@
 
             // Wait for the final word to be fully visible
             await new Promise(resolve => setTimeout(resolve, finalWord.length * 1000 + 2000));
+
+            // Insert logo between the last two letters
+            const lastLetterIndex = finalWord.length - 2;
+            const lastLetterElement = headerElement.children[lastLetterIndex];
+            lastLetterElement.style.position = 'relative';
+            logoElement.style.left = `${lastLetterElement.offsetLeft + lastLetterElement.offsetWidth / 2}px`;
+            logoElement.style.display = 'block';
 
             // Quick fade-out to black
             for (let i = 0; i < finalWord.length; i++) {
