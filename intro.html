@@ -32,9 +32,9 @@
             100% { opacity: 0; transform: translateY(50px) rotate(360deg); }
         }
 
-        @keyframes fadeOutQuick {
-            0% { opacity: 1; color: #FF69B4; }
-            100% { opacity: 0; color: black; }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
         }
 
         #header-word {
@@ -60,8 +60,8 @@
             animation: shatter 1s forwards;
         }
 
-        .header-letter.fade-out-quick {
-            animation: fadeOutQuick 0.5s forwards;
+        .header-letter.fade-out {
+            animation: fadeOut 1s forwards;
         }
     </style>
 </head>
@@ -72,7 +72,7 @@
         async function animateHeaderWord() {
             const headerElement = document.getElementById('header-word');
             const initialWord = "MANBOOBS";
-            const finalWord = "WOMANDO";
+            const finalWord = "WOMANBOOBS";
 
             // Add the initial word with gray letters
             headerElement.innerHTML = '';
@@ -97,7 +97,7 @@
             // Wait for the initial word to fully appear
             await new Promise(resolve => setTimeout(resolve, initialWord.length * 100 + 500));
 
-            // Change each letter from MANBOOBS to WOMANDO
+            // Change each letter from MANBOOBS to WOMANBOOBS
             for (let i = 0; i < finalWord.length; i++) {
                 if (headerElement.children[i]) {
                     const letterElement = headerElement.children[i];
@@ -115,15 +115,25 @@
             // Wait for the final word to be fully visible
             await new Promise(resolve => setTimeout(resolve, finalWord.length * 1000 + 2000));
 
-            // Quick fade-out to black
+            // Add shatter animation to each letter
             for (let i = 0; i < finalWord.length; i++) {
                 const letterElement = headerElement.children[i];
-                letterElement.classList.add('fade-out-quick');
+                letterElement.classList.add('shatter');
+                letterElement.style.animationDelay = `${i * 0.05}s`;
+            }
+
+            // Wait for the shatter animation to complete
+            await new Promise(resolve => setTimeout(resolve, finalWord.length * 50 + 1000));
+
+            // Add fade-out animation to each letter
+            for (let i = 0; i < finalWord.length; i++) {
+                const letterElement = headerElement.children[i];
+                letterElement.classList.add('fade-out');
                 letterElement.style.animationDelay = `${i * 0.1}s`;
             }
 
             // Wait for the fade-out animation to complete
-            await new Promise(resolve => setTimeout(resolve, finalWord.length * 100 + 500));
+            await new Promise(resolve => setTimeout(resolve, finalWord.length * 100 + 1000));
 
             // Clear the header word
             headerElement.innerHTML = '';
