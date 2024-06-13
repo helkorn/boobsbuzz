@@ -60,7 +60,7 @@
             position: absolute;
             width: 20px;
             height: 20px;
-            opacity: 0;
+            opacity: 1;
             transition: opacity 1s;
         }
     </style>
@@ -75,6 +75,14 @@
             const logoElement = document.getElementById('logo');
             const initialWord = "MANBOOBS";
             const finalWord = "WOMANDOO";
+
+            // Position the logo between the last two letters
+            const lastLetterRect = { right: headerElement.offsetWidth / 2 + 10 };
+            const secondLastLetterRect = { right: headerElement.offsetWidth / 2 - 10 };
+            const headerWordRect = headerElement.getBoundingClientRect();
+            const logoX = headerWordRect.left + (secondLastLetterRect.right - headerWordRect.left + (lastLetterRect.right - secondLastLetterRect.right) / 2) - 10;
+            logoElement.style.left = `${logoX}px`;
+            logoElement.style.top = `${headerWordRect.top - 30}px`; // 30px above the letters
 
             // Add the initial word with gray letters
             headerElement.innerHTML = '';
@@ -116,20 +124,6 @@
 
             // Wait for the final word to be fully visible (brief wait to ensure transition is complete)
             await new Promise(resolve => setTimeout(resolve, finalWord.length * 100 + 200));
-
-            // Position the logo between the last two letters
-            const lastLetter = headerElement.children[finalWord.length - 1];
-            const secondLastLetter = headerElement.children[finalWord.length - 2];
-            const lastLetterRect = lastLetter.getBoundingClientRect();
-            const secondLastLetterRect = secondLastLetter.getBoundingClientRect();
-
-            const headerWordRect = headerElement.getBoundingClientRect();
-            const logoX = headerWordRect.left + (secondLastLetterRect.right - headerWordRect.left + (lastLetterRect.left - secondLastLetterRect.right) / 2) - 10;
-            logoElement.style.left = `${logoX}px`;
-            logoElement.style.top = `${headerWordRect.top - 30}px`; // 30px above the letters
-
-            // Show the logo almost immediately after the word is pink
-            logoElement.style.opacity = 1;
         }
 
         animateHeaderWord();
