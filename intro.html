@@ -45,6 +45,7 @@
         }
 
         .header-letter {
+            opacity: 0;
             animation: fadeIn 0.5s forwards;
         }
 
@@ -77,10 +78,8 @@
             const finalWord = "WOMANDOO";
 
             // Position the logo between the last two letters
-            const lastLetterRect = { right: headerElement.offsetWidth / 2 + 10 };
-            const secondLastLetterRect = { right: headerElement.offsetWidth / 2 - 10 };
             const headerWordRect = headerElement.getBoundingClientRect();
-            const logoX = headerWordRect.left + (secondLastLetterRect.right - headerWordRect.left + (lastLetterRect.right - secondLastLetterRect.right) / 2) - 10;
+            const logoX = headerWordRect.left + (headerWordRect.width / 2) - 10;
             logoElement.style.left = `${logoX}px`;
             logoElement.style.top = `${headerWordRect.top - 30}px`; // 30px above the letters
 
@@ -130,3 +129,4 @@
     </script>
 </body>
 </html>
+
