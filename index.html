@@ -5,245 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BoobsBuzz</title>
     <style>
-        body {
-            background-color: black;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-        #puzzle {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            grid-gap: 5px;
-            margin-bottom: 20px;
-            width: 100%;
-            max-width: 300px;
-            position: relative;
-        }
-        .grid-item {
-            width: 100%;
-            padding-top: 100%;
-            position: relative;
-            background-color: black;
-            cursor: pointer;
-            transition: background-color 0.5s;
-            border-radius: 4px;
-        }
-        .grid-item span {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-transform: uppercase;
-            font-size: 20px;
-            transition: color 0.5s;
-        }
-        .grid-item.clicked {
-            background-color: #FF69B4;
-        }
-        .grid-item.wrong {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-        @keyframes flash {
-            0%, 100% { background-color: #FF69B4; }
-            50% { background-color: transparent; }
-        }
-        .flash {
-            animation: flash 0.2s 3;
-        }
-        @keyframes flashGrid {
-            0%, 100% { background-color: #FF69B4; }
-            50% { background-color: black; }
-        }
-        .flash-grid {
-            animation: flashGrid 0.5s 1;
-        }
-        @keyframes moveUp {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(0, -50px); }
-        }
-        .move-up {
-            animation: moveUp 1s forwards;
-        }
-        #found-word {
-            position: absolute;
-            top: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            visibility: hidden;
-        }
-        #found-word span {
-            font-size: 24px;
-            color: #FF69B4;
-            margin: 0 5px;
-        }
-        #message-container {
-            text-align: center;
-            margin-top: 40px;
-        }
-        #link-container {
-            font-size: 16px;
-            color: gray;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #hint-button, #change-game-button {
-            margin: 0 10px;
-            cursor: pointer;
-            color: white;
-        }
-        #change-game-button a {
-            text-decoration: none;
-            color: white;
-        }
-        #change-game-button a:hover {
-            text-decoration: none;
-        }
-        #timer {
-            margin: 0 10px;
-            color: white;
-        }
-        a {
-            color: white;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        .image-page {
-            background-color: white;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding-top: 60px;
-            position: relative;
-        }
-        .image-container {
-            width: 400px;
-            height: 400px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .zoom-image {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 2.5s, filter 1s;
-        }
-        @keyframes zoomIn {
-            0% {
-                transform: translate(-50%, -50%) scale(1) rotate(0deg);
-                filter: blur(0);
-            }
-            85% {
-                transform: translate(var(--targetX), var(--targetY)) scale(1.25) rotate(1deg);
-                filter: blur(3px);
-            }
-            100% {
-                transform: translate(var(--targetX), var(--targetY)) scale(1.05) rotate(0deg);
-                filter: blur(0);
-            }
-        }
-        .links-container {
-            width: 400px;
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 20px;
-        }
-        .links-container a, .links-container div {
-            font-size: 14px;
-            color: black;
-            text-decoration: none;
-            margin-right: 10px;
-        }
-        .links-container div {
-            cursor: pointer;
-        }
-        .gray-borders {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 200px;
-            background-color: #333;
-        }
-        .left-border {
-            left: 0;
-        }
-        .right-border {
-            right: 0;
-        }
-        .zoom-coordinates {
-            margin-top: 20px;
-            font-size: 16px;
-            color: black;
-        }
-        .play-again-icon {
-            position: absolute;
-            top: 420px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background: url('icon_play.png') no-repeat center center;
-            background-size: contain;
-            cursor: pointer;
-        }
+        /* Your existing styles */
     </style>
 </head>
 <body>
-    <div id="puzzle">
-        <!-- Puzzle items will be generated here -->
-    </div>
+    <div id="puzzle"></div>
     <div id="found-word"></div>
     <div id="message-container">
         <div id="link-container">
-            <div id="hint-button" onclick="giveHint()">ANNA VINKKI</div>
-            <div id="change-game-button"><a href="https://timosalonen.github.io/wordporn/">VAIHDA PELIÄ</a></div>
+            <div id="hint-button">ANNA VINKKI</div>
+            <div id="change-game-button"><a href="#">VAIHDA PELIÄ</a></div>
             <div id="timer">00:30</div>
         </div>
     </div>
-
     <script>
         const gridElement = document.getElementById('puzzle');
         const foundWordElement = document.getElementById('found-word');
         const hintButton = document.getElementById('hint-button');
-        const messageContainer = document.getElementById('message-container');
+        const changeGameButton = document.getElementById('change-game-button');
         let timerElement = document.getElementById('timer');
-        let wrongClicks = 0;
         let timerInterval;
         let wordPositions = [];
         let hintCount = 0;
 
         hintButton.addEventListener('click', giveHint);
+        changeGameButton.addEventListener('click', initGame);
 
         async function fetchWord() {
-            const response = await fetch('boobsmap.csv');
+            const response = await fetch('melonit.csv');
             const text = await response.text();
-            const lines = text.split('\n').slice(1); // Skip the header
-            const words = lines.map(line => line.split(',')[0].trim()).filter(word => word.length > 0);
+            const words = text.split('\n').map(word => word.trim()).filter(word => word.length > 0);
             return words[Math.floor(Math.random() * words.length)];
         }
 
         async function fetchZoomData() {
             const response = await fetch('boobsmap.csv');
             const text = await response.text();
-            const lines = text.split('\n').slice(1); // Skip the header
+            const lines = text.split('\n').slice(1);
             const data = lines.map(line => {
                 const [image_name, width, height, coord_x, coord_y, percent_x, percent_y] = line.split(',');
                 return { image_name, percent_x: parseFloat(percent_x), percent_y: parseFloat(percent_y) };
@@ -252,7 +50,7 @@
         }
 
         async function createGrid() {
-            const word = await fetchWord();
+            const word = (await fetchWord());
             wordPositions = [];
 
             let grid = [];
@@ -268,7 +66,7 @@
 
             let directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
             let positions = [{ x: startX, y: startY }];
-            grid[startY][startX] = word.charAt(0).toUpperCase();
+            grid[startY][startX] = word.charAt(0) === '_' ? '' : word.charAt(0).toUpperCase();
 
             for (let i = 1; i < word.length; i++) {
                 let lastPos = positions[positions.length - 1];
@@ -284,7 +82,7 @@
                 let newX = lastPos.x + dir[0];
                 let newY = lastPos.y + dir[1];
 
-                grid[newY][newX] = word.charAt(i).toUpperCase();
+                grid[newY][newX] = word.charAt(i) === '_' ? '' : word.charAt(i).toUpperCase();
                 positions.push({ x: newX, y: newY });
             }
 
@@ -297,8 +95,8 @@
             foundWordElement.innerHTML = '';
             messageContainer.innerHTML = `
                 <div id="link-container">
-                    <div id="hint-button" onclick="giveHint()">ANNA VINKKI</div>
-                    <div id="change-game-button"><a href="https://timosalonen.github.io/wordporn/">VAIHDA PELIÄ</a></div>
+                    <div id="hint-button">ANNA VINKKI</div>
+                    <div id="change-game-button"><a href="#">VAIHDA PELIÄ</a></div>
                     <div id="timer">00:30</div>
                 </div>
             `;
@@ -354,7 +152,6 @@
                 }
             } else {
                 cell.classList.add('wrong');
-                wrongClicks++;
                 setTimeout(() => {
                     cell.classList.remove('wrong');
                 }, 300);
@@ -438,30 +235,35 @@
         async function showImage(word) {
             const zoomData = await fetchZoomData();
             const imageZoom = zoomData.find(data => data.image_name.toLowerCase() === word.toLowerCase());
-            const targetX = imageZoom ? -imageZoom.percent_x : -50;
-            const targetY = imageZoom ? -imageZoom.percent_y : -50;
+            const percentX = imageZoom ? imageZoom.percent_x : 50;
+            const percentY = imageZoom ? imageZoom.percent_y : 50;
 
             document.body.innerHTML = `
                 <div class="image-page">
                     <div class="gray-borders left-border"></div>
                     <div class="gray-borders right-border"></div>
                     <div class="image-container">
-                        <img id="mainImage" class="zoom-image" src="titpics/${word.toLowerCase()}.png" style="--targetX: ${targetX}%; --targetY: ${targetY}%; transform: translate(-50%, -50%);">
+                        <div class="blur-background">
+                            <img src="titpics/${word.toLowerCase()}.png">
+                        </div>
+                        <img id="mainImage" class="zoom-image" src="titpics/${word.toLowerCase()}.png" style="transform: translate(-${percentX}%, -${percentY}%);">
                     </div>
-                    <div id="playAgain" class="play-again-icon" style="width: 40px; height: 40px;" onclick="initGame()"></div>
+                    <div class="links-container">
+                        <a href="titpics.html">OSTA TÄMÄ PAITA</a>
+                        <div onclick="window.location.href='https://timosalonen.github.io/boobsbuzz/'">UUSI PELI</div>
+                    </div>
+                    <div class="zoom-coordinates">
+                        <p>X-Koordinaatti: ${percentX}%</p>
+                        <p>Y-Koordinaatti: ${percentY}%</p>
+                    </div>
                 </div>
             `;
 
             const mainImage = document.getElementById('mainImage');
 
-            // Start zoom animation
             setTimeout(() => {
                 mainImage.style.animation = 'zoomIn 2.5s forwards';
-            }, 1000); // Start after 1 second
-
-            // Ensure the play-again icon is linked to initGame correctly
-            const playAgainIcon = document.getElementById('playAgain');
-            playAgainIcon.addEventListener('click', initGame);
+            }, 1000);
         }
 
         initGame();
