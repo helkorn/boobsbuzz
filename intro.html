@@ -67,7 +67,7 @@
 </head>
 <body>
     <div id="header-word"></div>
-    <img id="logo" src="logo_WS.png" alt="Logo">
+    <img id="logo" src="logo_WD.png" alt="Logo">
 
     <script>
         async function animateHeaderWord() {
@@ -115,7 +115,7 @@
             console.log('Final word after change:', headerElement.innerHTML);
 
             // Wait for the final word to be fully visible
-            await new Promise(resolve => setTimeout(resolve, finalWord.length * 1000 + 2000));
+            await new Promise(resolve => setTimeout(resolve, finalWord.length * 1000 + 200));
 
             // Position the logo between the last two letters
             const lastLetter = headerElement.children[finalWord.length - 1];
@@ -128,8 +128,8 @@
             logoElement.style.left = `${logoX}px`;
             logoElement.style.top = `${headerWordRect.top - 30}px`; // 30px above the letters
 
-            // Show the logo 80% earlier than previously
-            await new Promise(resolve => setTimeout(resolve, (2000 * 0.2))); // 80% earlier
+            // Show the logo 200 ms after the word is fully visible
+            await new Promise(resolve => setTimeout(resolve, 200));
             logoElement.style.opacity = 1;
         }
 
