@@ -27,11 +27,6 @@
             100% { color: #FF69B4; }
         }
 
-        @keyframes shatter {
-            0% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(50px) rotate(360deg); }
-        }
-
         #header-word {
             font-size: 24px;
             text-transform: uppercase;
@@ -50,10 +45,6 @@
 
         .header-letter.transition {
             animation: changeLetter 1s forwards;
-        }
-
-        .header-letter.shatter {
-            animation: shatter 1s forwards;
         }
 
         #logo {
@@ -93,8 +84,6 @@
                 headerElement.appendChild(span);
             }
 
-            console.log('Initial word added:', headerElement.innerHTML);
-
             // Ensure there are enough spans to hold the final word
             for (let i = initialWord.length; i < finalWord.length; i++) {
                 const span = document.createElement('span');
@@ -110,16 +99,11 @@
             for (let i = 0; i < finalWord.length; i++) {
                 if (headerElement.children[i]) {
                     const letterElement = headerElement.children[i];
-                    console.log(`Changing letter ${i}: ${letterElement.textContent} to ${finalWord[i]}`);
                     letterElement.textContent = finalWord[i];
                     letterElement.classList.add('transition');
                     letterElement.style.animationDelay = `${i * 0.1}s`;
-                } else {
-                    console.warn(`No element found for index ${i}`);
                 }
             }
-
-            console.log('Final word after change:', headerElement.innerHTML);
 
             // Wait for the final word to fully transition to pink
             await new Promise(resolve => setTimeout(resolve, finalWord.length * 1000));
