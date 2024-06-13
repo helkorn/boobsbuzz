@@ -45,7 +45,6 @@
         }
 
         .header-letter {
-            opacity: 0;
             animation: fadeIn 0.5s forwards;
         }
 
@@ -61,14 +60,14 @@
             position: absolute;
             width: 20px;
             height: 20px;
-            opacity: 1;
+            opacity: 0;
             transition: opacity 1s;
         }
     </style>
 </head>
 <body>
     <div id="header-word"></div>
-    <img id="logo" src="logo_WD.png" alt="Logo">
+    <img id="logo" src="logo_WS.png" alt="Logo">
 
     <script>
         async function animateHeaderWord() {
@@ -76,12 +75,6 @@
             const logoElement = document.getElementById('logo');
             const initialWord = "MANBOOBS";
             const finalWord = "WOMANDOO";
-
-            // Position the logo between the last two letters
-            const headerWordRect = headerElement.getBoundingClientRect();
-            const logoX = headerWordRect.left + (headerWordRect.width / 2) - 10;
-            logoElement.style.left = `${logoX}px`;
-            logoElement.style.top = `${headerWordRect.top - 30}px`; // 30px above the letters
 
             // Add the initial word with gray letters
             headerElement.innerHTML = '';
@@ -121,8 +114,23 @@
 
             console.log('Final word after change:', headerElement.innerHTML);
 
-            // Wait for the final word to be fully visible (brief wait to ensure transition is complete)
-            await new Promise(resolve => setTimeout(resolve, finalWord.length * 100 + 200));
+            // Wait for the final word to be fully visible
+            await new Promise(resolve => setTimeout(resolve, finalWord.length * 1000 + 2000));
+
+            // Position the logo between the last two letters
+            const lastLetter = headerElement.children[finalWord.length - 1];
+            const secondLastLetter = headerElement.children[finalWord.length - 2];
+            const lastLetterRect = lastLetter.getBoundingClientRect();
+            const secondLastLetterRect = secondLastLetter.getBoundingClientRect();
+
+            const headerWordRect = headerElement.getBoundingClientRect();
+            const logoX = headerWordRect.left + (secondLastLetterRect.right - headerWordRect.left + (lastLetterRect.left - secondLastLetterRect.right) / 2) - 10;
+            logoElement.style.left = `${logoX}px`;
+            logoElement.style.top = `${headerWordRect.top - 30}px`; // 30px above the letters
+
+            // Show the logo 80% earlier than previously
+            await new Promise(resolve => setTimeout(resolve, (2000 * 0.2))); // 80% earlier
+            logoElement.style.opacity = 1;
         }
 
         animateHeaderWord();
