@@ -59,7 +59,7 @@
         #logo {
             position: absolute;
             width: 20px;
-            height: 20px;
+            height: auto; /* Maintain aspect ratio */
             opacity: 0;
             transition: opacity 1s;
         }
@@ -75,6 +75,13 @@
             const logoElement = document.getElementById('logo');
             const initialWord = "MANBOOBS";
             const finalWord = "WOMANDOO";
+
+            // Calculate the height maintaining aspect ratio
+            const logoOriginalWidth = 667;
+            const logoOriginalHeight = 310;
+            const logoDisplayWidth = 20;
+            const logoDisplayHeight = (logoOriginalHeight / logoOriginalWidth) * logoDisplayWidth;
+            logoElement.style.height = `${logoDisplayHeight}px`;
 
             // Add the initial word with gray letters
             headerElement.innerHTML = '';
@@ -114,12 +121,8 @@
 
             console.log('Final word after change:', headerElement.innerHTML);
 
-            // Show the logo when pink color starts appearing
-            await new Promise(resolve => setTimeout(resolve, 500)); // adjust the delay if necessary
-            logoElement.style.opacity = 1;
-
-            // Wait for the final word to be fully visible
-            await new Promise(resolve => setTimeout(resolve, finalWord.length * 1000 + 1500));
+            // Wait for the final word to fully transition to pink
+            await new Promise(resolve => setTimeout(resolve, finalWord.length * 1000));
 
             // Position the logo between the last two letters
             const lastLetter = headerElement.children[finalWord.length - 1];
@@ -130,12 +133,13 @@
             const headerWordRect = headerElement.getBoundingClientRect();
             const logoX = headerWordRect.left + (secondLastLetterRect.right - headerWordRect.left + (lastLetterRect.left - secondLastLetterRect.right) / 2) - 10;
             logoElement.style.left = `${logoX}px`;
-            logoElement.style.top = `${headerWordRect.top - 30}px`; // 30px above the letters
+            logoElement.style.top = `${headerWordRect.top - logoDisplayHeight - 10}px`; // 10px above the letters
+
+            // Show the logo
+            logoElement.style.opacity = 1;
         }
 
         animateHeaderWord();
     </script>
 </body>
 </html>
-
-
