@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WB intro</title>
+    <title>WD intro</title>
     <style>
         body {
             background-color: black;
@@ -67,7 +67,7 @@
 </head>
 <body>
     <div id="header-word"></div>
-    <img id="logo" src="pinklogo.png" alt="Logo">
+    <img id="logo" src="logo_WS.png" alt="Logo">
 
     <script>
         async function animateHeaderWord() {
@@ -128,8 +128,8 @@
             logoElement.style.left = `${logoX}px`;
             logoElement.style.top = `${headerWordRect.top - 30}px`; // 30px above the letters
 
-            // Show the logo after 2 seconds
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            // Show the logo 80% earlier than previously
+            await new Promise(resolve => setTimeout(resolve, (2000 * 0.2))); // 80% earlier
             logoElement.style.opacity = 1;
         }
 
@@ -137,3 +137,4 @@
     </script>
 </body>
 </html>
+
