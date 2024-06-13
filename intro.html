@@ -117,21 +117,19 @@
             // Wait for the final word to be fully visible
             await new Promise(resolve => setTimeout(resolve, finalWord.length * 1000 + 2000));
 
-            // Clear the header word without fade-out
-            headerElement.innerHTML = '';
-
             // Position the logo between the last two letters
             const lastLetter = headerElement.children[finalWord.length - 1];
             const secondLastLetter = headerElement.children[finalWord.length - 2];
             const lastLetterRect = lastLetter.getBoundingClientRect();
             const secondLastLetterRect = secondLastLetter.getBoundingClientRect();
 
-            const logoX = (secondLastLetterRect.right + lastLetterRect.left) / 2 - 10; // Center of the gap minus half the logo width
+            const headerWordRect = headerElement.getBoundingClientRect();
+            const logoX = headerWordRect.left + (secondLastLetterRect.right - headerWordRect.left + (lastLetterRect.left - secondLastLetterRect.right) / 2) - 10;
             logoElement.style.left = `${logoX}px`;
-            logoElement.style.top = `${secondLastLetterRect.top - 30}px`; // 30px above the letters
+            logoElement.style.top = `${headerWordRect.top - 30}px`; // 30px above the letters
 
-            // Show the logo after 3 seconds
-            await new Promise(resolve => setTimeout(resolve, 3000));
+            // Show the logo after 2 seconds
+            await new Promise(resolve => setTimeout(resolve, 2000));
             logoElement.style.opacity = 1;
         }
 
