@@ -304,6 +304,7 @@
                     <div id="timer">00:30</div>
                 </div>
             `;
+            timerElement = document.getElementById('timer'); // Update the timerElement reference
             hintButton.style.color = 'white';
             hintButton.style.cursor = 'pointer';
             const { grid, word, positions, startX, startY } = await createGrid();
@@ -387,7 +388,7 @@
 
         function startTimer(word) {
             let timeLeft = 30;
-            timerElement = document.getElementById('timer');
+            timerElement = document.getElementById('timer'); // Update the timerElement reference
             timerElement.textContent = `00:${timeLeft < 10 ? '0' + timeLeft : timeLeft}`;
             clearInterval(timerInterval);
             timerInterval = setInterval(() => {
