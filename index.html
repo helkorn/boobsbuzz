@@ -305,6 +305,7 @@
                     <div id="timer">00:30</div>
                 </div>
             `;
+            await new Promise(resolve => setTimeout(resolve, 0)); // Ensures the DOM is updated
             timerElement = document.getElementById('timer'); // Update the timerElement reference
             hintButton.style.color = 'white';
             hintButton.style.cursor = 'pointer';
