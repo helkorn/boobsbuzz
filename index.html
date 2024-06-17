@@ -284,7 +284,7 @@
                 let newX = lastPos.x + dir[0];
                 let newY = lastPos.y + dir[1];
 
-                grid[newY][newX] = word.charAt(i).toUpperCase();
+                grid[newY][newX] = word.charat(i).touppercase();
                 positions.push({ x: newX, y: newY });
             }
 
@@ -461,11 +461,13 @@
 
             // Ensure the play-again icon is linked to initGame correctly
             const playAgainIcon = document.getElementById('playAgain');
-            playAgainIcon.addEventListener('click', initGame);
+            playAgainIcon.addEventListener('click', () => {
+                console.log("Play again icon clicked!");
+                initGame();
+            });
         }
 
         initGame();
     </script>
 </body>
 </html>
-
