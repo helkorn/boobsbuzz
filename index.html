@@ -194,15 +194,17 @@
             font-size: 16px;
             color: black;
         }
-        .play-again-icon {
-            position: absolute;
-            top: 420px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background: url('icon_play.png') no-repeat center center;
-            background-size: contain;
+        .play-again-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #FF69B4;
+            color: white;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
+        }
+        .play-again-button:hover {
+            background-color: #FF1493;
         }
     </style>
 </head>
@@ -448,7 +450,7 @@
                     <div class="image-container">
                         <img id="mainImage" class="zoom-image" src="titpics/${word.toLowerCase()}.png" style="--targetX: ${targetX}%; --targetY: ${targetY}%; transform: translate(-50%, -50%);">
                     </div>
-                    <div id="playAgain" class="play-again-icon">Play Again</div>
+                    <button id="playAgain" class="play-again-button">Play Again</button>
                 </div>
             `;
 
@@ -459,10 +461,10 @@
                 mainImage.style.animation = 'zoomIn 2.5s forwards';
             }, 1000); // Start after 1 second
 
-            // Ensure the play-again icon is linked to initGame correctly
-            const playAgainIcon = document.getElementById('playAgain');
-            playAgainIcon.addEventListener('click', () => {
-                console.log("Play again icon clicked!");
+            // Ensure the play-again button is linked to initGame correctly
+            const playAgainButton = document.getElementById('playAgain');
+            playAgainButton.addEventListener('click', () => {
+                console.log("Play again button clicked!");
                 initGame();
             });
         }
