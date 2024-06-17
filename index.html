@@ -305,8 +305,11 @@
                     <div id="timer">00:30</div>
                 </div>
             `;
-            await new Promise(resolve => setTimeout(resolve, 0)); // Ensures the DOM is updated
-            timerElement = document.getElementById('timer'); // Update the timerElement reference
+            timerElement = document.querySelector('#timer'); // Use querySelector to get the timer element
+            if (!timerElement) {
+                console.error("Timer element not found");
+                return;
+            }
             hintButton.style.color = 'white';
             hintButton.style.cursor = 'pointer';
             const { grid, word, positions, startX, startY } = await createGrid();
@@ -390,7 +393,11 @@
 
         function startTimer(word) {
             let timeLeft = 30;
-            timerElement = document.getElementById('timer'); // Update the timerElement reference
+            timerElement = document.querySelector('#timer'); // Use querySelector to get the timer element
+            if (!timerElement) {
+                console.error("Timer element not found");
+                return;
+            }
             timerElement.textContent = `00:${timeLeft < 10 ? '0' + timeLeft : timeLeft}`;
             clearInterval(timerInterval);
             timerInterval = setInterval(() => {
@@ -479,3 +486,4 @@
     </script>
 </body>
 </html>
+
