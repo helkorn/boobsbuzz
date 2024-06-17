@@ -295,6 +295,7 @@
         }
 
         async function initGame() {
+            clearInterval(timerInterval); // Ensure any previous timers are cleared
             gridElement.innerHTML = '';
             foundWordElement.innerHTML = '';
             messageContainer.innerHTML = `
