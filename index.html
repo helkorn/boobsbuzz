@@ -284,7 +284,7 @@
                 let newX = lastPos.x + dir[0];
                 let newY = lastPos.y + dir[1];
 
-                grid[newY][newX] = word.charat(i).touppercase();
+                grid[newY][newX] = word.charAt(i).toUpperCase();
                 positions.push({ x: newX, y: newY });
             }
 
@@ -467,7 +467,10 @@
             });
         }
 
-        initGame();
+        document.addEventListener('DOMContentLoaded', (event) => {
+            initGame();
+        });
+
     </script>
 </body>
 </html>
